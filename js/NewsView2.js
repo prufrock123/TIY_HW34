@@ -23,7 +23,8 @@
 	    initialize: function() {
 	        this.fetch().then(function(data) {
 	            console.log(data);
-	            data.forEach(function(element) {
+	            var sortedData = data.list.story
+	            sortedData.forEach(function(element) {
 	                new NewsView(element);
 	            });
 	        });
@@ -32,13 +33,13 @@
 	        return [
 	            'http://api.npr.org/query?',
 	            '&apiKey=',
-	            this.api_key,
+	            this.get('api_key'),
 	            '&format=json&'
 	        ].join('');
 	    }
 	});
 
-	$("#submit").click(function() {
+	$("#submit").on('click', function() {
 	    var news = new NewsClient({
 	        id: makeSelection()
 	    });
