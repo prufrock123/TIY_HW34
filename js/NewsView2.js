@@ -10,7 +10,7 @@
 	        this.options.$container.append(this.el);
 	        this.render();
 	    },
-	    template: "<div class='row'><div class='large-10 columns'><a href='{link[0].$text}'><h4>{title.$text}</h4></a></div></div><hr/>",
+	    template: "<div class='row'><div class='large-10 columns'><a href='{link[0].$text}' target='_blank'><h4>{title.$text}</h4></a></div></div><hr/>",
 	    render: function() {
 	        this.el.innerHTML = _.template(this.template, this.options);
 	    }
@@ -22,7 +22,8 @@
 	    },
 	    initialize: function() {
 	        this.fetch().then(function(data) {
-	            console.log(data);
+	            // console.log(data);
+	            // console.log(this.get('id'))
 	            var sortedData = data.list.story
 	            sortedData.forEach(function(element) {
 	                new NewsView(element);
@@ -34,14 +35,17 @@
 	            'http://api.npr.org/query?',
 	            '&apiKey=',
 	            this.get('api_key'),
-	            '&format=json&'
+	            '&format=json',
+	            '&',
+	            this.get('selection')
 	        ].join('');
 	    }
 	});
 
 	$("#submit").on('click', function() {
+		document.querySelector("#feed").innerHTML = ""
 	    var news = new NewsClient({
-	        id: makeSelection()
+	        selection: makeSelection()
 	    });
 	});
 
